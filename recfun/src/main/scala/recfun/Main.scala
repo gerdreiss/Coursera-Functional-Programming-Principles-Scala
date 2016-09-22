@@ -24,7 +24,24 @@ object Main {
     * Exercise 2
     */
   def balance(chars: List[Char]): Boolean = {
-    true
+
+    def checkBalance(counter: Int, chars: List[Char]): Boolean = {
+      if ((counter == 0) && chars.isEmpty) {
+        true
+      } else if ((counter < 0) || (chars.isEmpty && (counter > 0))) {
+        false
+      } else {
+        val first = chars.head
+        var increment: Int = 0
+
+        if (first == '(') increment = 1
+        else if (first == ')') increment = -1
+
+        checkBalance(counter + increment, chars.tail)
+      }
+    }
+
+    checkBalance(0, chars)
   }
 
   /**

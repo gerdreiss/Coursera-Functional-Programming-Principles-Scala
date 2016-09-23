@@ -32,10 +32,10 @@ object Main {
         false
       } else {
         val first = chars.head
-        var increment: Int = 0
-
-        if (first == '(') increment = 1
-        else if (first == ')') increment = -1
+        val increment: Int =
+          if (first == '(') 1
+          else if (first == ')') -1
+          else 0
 
         checkBalance(counter + increment, chars.tail)
       }

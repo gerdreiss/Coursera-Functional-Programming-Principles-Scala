@@ -43,7 +43,7 @@ object FunSets {
   /**
     * Returns the subset of `s` for which `p` holds.
     */
-  def filter(s: Set, p: Int => Boolean): Set = elem => contains(s, elem) == p(elem)
+  def filter(s: Set, p: Int => Boolean): Set = elem => contains(s, elem) && p(elem)
 
 
   /**

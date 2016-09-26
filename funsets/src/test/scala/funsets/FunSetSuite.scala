@@ -77,6 +77,11 @@ class FunSetSuite extends FunSuite {
     val s1 = singletonSet(1)
     val s2 = singletonSet(2)
     val s3 = singletonSet(3)
+    val s4 = singletonSet(4)
+    val s5 = singletonSet(5)
+    val s6 = singletonSet(6)
+    val s7 = singletonSet(7)
+    val s1000 = singletonSet(1000)
   }
 
   /**
@@ -133,13 +138,18 @@ class FunSetSuite extends FunSuite {
     }
   }
 
-  test("filter multiples of 2") {
+  test("filter of _ < 5") {
     new TestSets {
-      val s = union(union(s1, s2), s3)
-      val f = filter(s, elem => elem % 2 == 0)
-      assert(contains(f, 2), "Element from s2")
-      assert(!contains(f, 1), "Element from s1")
-      assert(!contains(f, 3), "Element from s3")
+      val s = union(union(union(union(union(s1, s3), s4), s5), s7), s1000)
+      printSet(s)
+      val f = filter(s, elem => elem < 5)
+      printSet(f)
+      assert(contains(f, 1), "Element from s1")
+      assert(contains(f, 3), "Element from s3")
+      assert(contains(f, 4), "Element from s4")
+      assert(!contains(f, 2), "Element from s2")
+      assert(!contains(f, 7), "Element from s7")
+      assert(!contains(f, 1000), "Element from s1000")
     }
   }
 

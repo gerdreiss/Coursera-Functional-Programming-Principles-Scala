@@ -150,8 +150,11 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     }
   }
 
-  override def descendingByRetweet: TweetList =
-    new Cons(mostRetweeted, left.union(right).descendingByRetweet)
+  override def descendingByRetweet: TweetList = {
+    val mr = mostRetweeted
+    new Cons(mr, remove(mr).descendingByRetweet)
+  }
+
 
   /**
    * The following methods are already implemented

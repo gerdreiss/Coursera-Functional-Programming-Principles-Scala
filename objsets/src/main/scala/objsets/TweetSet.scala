@@ -136,9 +136,9 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
 
   override def union(that: TweetSet): TweetSet = {
-    var t: TweetSet = this
-    that.foreach(e => t = t.incl(e))
-    t
+    var res: TweetSet = this
+    that.foreach(elm => res = res.incl(elm))
+    res
   }
 
 

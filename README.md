@@ -3,6 +3,6 @@
 ## Assignments
 
 
-Week 1 recfun:  Recursion
-Week 2 funsets: Functional Sets
-Week 3 objsets: Object-Oriented Sets
+1.  Week - recfun:  Recursion
+2.  Week - funsets: Functional Sets
+3.  Week - objsets: Object-Oriented Sets

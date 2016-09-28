@@ -1,3 +1,8 @@
-# Functional Programming Principles in Scala (Martin Odersky, Coursera)
+# Functional Programming Principles in Scala
+## (Martin Odersky, Coursera)
 ## Assignments
-Assignments for the Coursera Course "Functional Programming Principles in Scala"
+
+
+Week 1 recfun:  Recursion
+Week 2 funsets: Functional Sets
+Week 3 objsets: Object-Oriented Sets

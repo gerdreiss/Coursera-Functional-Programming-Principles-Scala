@@ -104,9 +104,11 @@ object Huffman {
     * If `trees` is a list of less than two elements, that list should be returned
     * unchanged.
     */
-  def combine(trees: List[CodeTree]): List[CodeTree] =
-    if (singleton(trees)) trees
-    else List(makeCodeTree(trees.head, trees.tail.head)) ::: combine(trees.tail.tail)
+  def combine(trees: List[CodeTree]): List[CodeTree] = trees match {
+    case left :: right :: cs => makeCodeTree(left, right) :: cs
+    case _ => trees
+  }
+
 
   /**
     * This function will be called in the following way:
@@ -149,8 +151,8 @@ object Huffman {
     */
   def decode(tree: CodeTree, bits: List[Bit]): List[Char] = {
     def loop(t: CodeTree, bits: List[Bit]): List[Char] = t match {
-      case Fork(left, right, _, _) => loop(if (bits.head == 0) left else right, bits.tail)
       case Leaf(c, _) => if (bits.isEmpty) List(c) else c :: loop(tree, bits)
+      case Fork(left, right, c, _) => if (bits.isEmpty) c else loop(if (bits.head == 0) left else right, bits.tail)
     }
 
     loop(tree, bits)
@@ -220,7 +222,9 @@ object Huffman {
     * on the two parameter code tables.
     */
   def mergeCodeTables(a: CodeTable, b: CodeTable): CodeTable = {
-    a ::: b
+    def insert(b: Bit)(code: (Char, List[Bit])): (Char, List[Bit]) = (code._1, b :: code._2)
+
+    a.map(insert(0)) ::: b.map(insert(1))
   }
 
   /**

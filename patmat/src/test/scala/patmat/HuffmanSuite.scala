@@ -50,5 +50,14 @@ class HuffmanSuite extends FunSuite {
       assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
     }
   }
+  test("decode and encode longer strings using frenchcode and quickEncode") {
+    assert(decode(frenchCode, quickEncode(frenchCode)("thisisatest".toList)) === "thisisatest".toList)
+  }
 
+  test("encode and decode a sample string using new custome tree") {
+    val myText = "thisisatestofyourcreatecodetreemethod".toList
+    val myTree = createCodeTree(myText)
+    assert(decode(myTree, encode(myTree)(myText)) === myText)
+
+  }
 }

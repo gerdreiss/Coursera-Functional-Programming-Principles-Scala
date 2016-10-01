@@ -60,4 +60,9 @@ class HuffmanSuite extends FunSuite {
     assert(decode(myTree, encode(myTree)(myText)) === myText)
 
   }
+
+  test("'createCodeTree(someText)' gives an optimal encoding, the number of bits when encoding 'someText' is minimal"){
+    val myTree = createCodeTree("someText".toList)
+    assert(chars(myTree) === "someText")
+  }
 }

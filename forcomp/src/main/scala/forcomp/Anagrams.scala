@@ -83,17 +83,10 @@ object Anagrams {
   def combinations(occurrences: Occurrences): List[Occurrences] = {
     if (occurrences.isEmpty) List(Nil)
     else {
-      val sub = for {
-        occ <- occurrences
-        occs <- (1 to occ._2) map (i => (occ._1, i)) toList
-      } yield List(occs)
-
-      List(List()) ::: sub
+      val expl = occurrences map (occ => (for (n <- 1 to occ._2) yield (occ._1, n)) toList)
+      expl.foldRight(List[Occurrences](Nil))((left, right) => right ++ (for (l <- left; r <- right) yield l :: r))
     }
   }
-
-  // List((a,1)), List((b,1)), List((b,2)), List(), List((a,2)))
-  // List((a,1)), List((b,1)), List((b,2)), List((a,1), (b,1)), List(), List((a,2), (b,1)), List((a,2)), List((a,1), (b,2)), List((a,2), (b,2))
 
 
   /** Subtracts occurrence list `y` from occurrence list `x`.

@@ -107,11 +107,12 @@ object Anagrams {
     * and has no zero-entries.
     */
   def subtract(x: Occurrences, y: Occurrences): Occurrences = {
-    def correspond(occ1: (Char, Int), occ2: (Char, Int)): Boolean = occ1._1 == occ2._1 && occ1._2 <= occ2._2
-    if (y.forall(y_occ => x.exists(correspond(y_occ, _))))
-      x.filterNot(x_occ => y.exists(correspond(_, x_occ)))
+    def corresponds(occ1: (Char, Int), occ2: (Char, Int)): Boolean = occ1._1 == occ2._1 && occ1._2 >= occ2._2
+    if (!y.forall(y_occ => x.exists(corresponds(_, y_occ)))) throw new Error("y is not subset of x")
 
-    else throw new Error("y is not subset of x")
+    val (part1, part2) = x.partition(x_occ => y.exists(y_occ => x_occ._1 == y_occ._1))
+    val filtered = for ((o1, o2) <- part1.zip(y) if o1._2 != o2._2) yield (o1._1, o1._2 - o2._2)
+    (filtered ++ part2).sorted
   }
 
   /** Returns a list of all anagram sentences of the given sentence.
@@ -154,5 +155,17 @@ object Anagrams {
     *
     * Note: There is only one anagram of an empty sentence.
     */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
+    def loop(occurrences: Occurrences): List[Sentence] = {
+      if (occurrences.isEmpty) List(Nil)
+      else for {
+        comb <- combinations(occurrences)
+        w <- dictionaryByOccurrences getOrElse(comb, Nil)
+        s <- loop(subtract(occurrences, wordOccurrences(w)))
+        if comb.nonEmpty
+      } yield w :: s
+    }
+
+    loop(sentenceOccurrences(sentence))
+  }
 }

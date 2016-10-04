@@ -107,8 +107,9 @@ object Anagrams {
     * and has no zero-entries.
     */
   def subtract(x: Occurrences, y: Occurrences): Occurrences = {
-    if (y.forall(y_occ => x.exists(_._1 == y_occ._1)))
-      List()
+    def correspond(occ1: (Char, Int), occ2: (Char, Int)): Boolean = occ1._1 == occ2._1 && occ1._2 <= occ2._2
+    if (y.forall(y_occ => x.exists(correspond(y_occ, _))))
+      x.filterNot(x_occ => y.exists(correspond(_, x_occ)))
 
     else throw new Error("y is not subset of x")
   }

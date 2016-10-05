@@ -7,4 +7,5 @@
 2.  Week - funsets: Functional Sets
 3.  Week - objsets: Object-Oriented Sets
 4.  Week - patmat:  Huffman Code
+5.  Week - +
 6.  Week - forcomp: Anagrams
